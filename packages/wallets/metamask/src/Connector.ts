@@ -1,9 +1,7 @@
-import type { Provider, ProviderRpcError, WalletName } from '@react-web3-wallet/core';
+import type { ProviderRpcError, WalletName } from '@react-web3-wallet/core';
 import { Connector } from '@react-web3-wallet/core';
 
 import { icon } from './assets';
-
-const providerFilter = (p: Provider) => !!p.isMetaMask;
 
 const _walletName = 'MetaMask';
 const walletName = _walletName as WalletName<typeof _walletName>;
@@ -16,7 +14,9 @@ export class MetaMask extends Connector {
   /** {@inheritdoc Connector.constructor} */
   constructor(options?: Connector['options']) {
     super({
-      providerFilter,
+      providerFilter: (p, info) => {
+        return info ? info.rdns === 'io.metamask' : !!p.isMetaMask;
+      },
       ...options,
     });
   }

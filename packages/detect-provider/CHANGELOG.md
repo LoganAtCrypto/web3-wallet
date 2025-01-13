@@ -1,5 +1,11 @@
 # @web3-wallet/detect-provider
 
+## 3.0.1
+
+### Patch Changes
+
+- eip-6963 support multiple providers
+
 ## 3.0.0
 
 ### Major Changes

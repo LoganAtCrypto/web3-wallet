@@ -1,5 +1,12 @@
 # @web3-wallet/walletconnect
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @react-web3-wallet/core@3.0.1
+
 ## 4.0.0
 
 ### Major Changes

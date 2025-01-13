@@ -1,10 +1,11 @@
 {
-  "name": "@react-web3-wallet/detect-provider",
-  "description": "detect provider in host environments",
+  "name": "@react-web3-wallet/rabby",
+  "description": "rabby connector",
   "version": "3.0.1",
   "keywords": [
     "web3-wallet",
-    "detect provider"
+    "web3",
+    "rabby"
   ],
   "author": "logan <logan.luo@crypto.com>",
   "license": "MIT",
@@ -17,10 +18,13 @@
   "module": "./dist/esm/index.js",
   "scripts": {
     "build": "tsc;tsc --module commonjs --outDir dist/cjs",
-    "watch": "chokidar 'src/**/*.ts' -c 'pnpm -wc exec turbo run build --filter=detect-provider'",
+    "watch": "chokidar 'src/**/*.ts' -c 'pnpm -wc exec turbo run build --filter=rabby'",
     "lint": "eslint src",
     "fix": "eslint src --fix",
     "ts-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-web3-wallet/core": "workspace:*"
   },
   "repository": {
     "type": "git",

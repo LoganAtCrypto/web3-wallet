@@ -1,5 +1,13 @@
 # @web3-wallet/metamask
 
+## 3.0.1
+
+### Patch Changes
+
+- eip-6963 support multiple providers
+- Updated dependencies
+  - @react-web3-wallet/core@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
