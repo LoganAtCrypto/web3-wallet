@@ -1,5 +1,8 @@
 /* eslint-disable max-lines */
-import type { DetectProviderOptions } from '@react-web3-wallet/detect-provider';
+import type {
+  DetectProviderOptions,
+  EIP6963ProviderInfo,
+} from '@react-web3-wallet/detect-provider';
 
 import { createWalletStoreAndActions } from './createWalletStore';
 import type { WalletName, WalletStore, WalletStoreActions } from './types';
@@ -13,7 +16,10 @@ import type {
 } from './types/provider';
 import { parseChainId, toHexChainId } from './utils';
 
-export type ProviderFilter = (provider: Provider) => boolean;
+export type ProviderFilter = (
+  provider: Provider,
+  info?: EIP6963ProviderInfo,
+) => boolean;
 
 /**
  * ProviderOptions is specific to each wallet provider, and it will be used to
@@ -104,11 +110,28 @@ export abstract class Connector<
    */
   public async detectProvider(
     providerFilter?: ProviderFilter,
-    options?: DetectProviderOptions,
+    options?: DetectProviderOptions & {
+      eip6963Timeout?: number;
+    },
   ): Promise<Provider> {
     if (this.provider) return this.provider;
 
     const m = await import('@react-web3-wallet/detect-provider');
+
+    const finalProviderFilter =
+      providerFilter ?? this.options?.providerFilter ?? (() => true);
+
+    const eip6963ProviderDetails = await m.detectEip6963ProviderDetails(
+      options?.eip6963Timeout,
+    );
+    const eip6963ProviderDetail = eip6963ProviderDetails.find((v) =>
+      finalProviderFilter(v.provider, v.info),
+    );
+
+    if (eip6963ProviderDetail) {
+      this.provider = eip6963ProviderDetail.provider;
+      return eip6963ProviderDetail.provider;
+    }
 
     const injectedProvider = (await m.detectProvider(
       options ?? this.options?.detectProviderOptions,
@@ -118,16 +141,16 @@ export abstract class Connector<
 
     let provider = injectedProvider as Provider | undefined;
 
-    providerFilter =
-      providerFilter ?? this.options?.providerFilter ?? (() => true);
-
     /**
      * handle the case when e.g. metamask and coinbase wallet are both installed
      * */
     if (injectedProvider.providers?.length) {
-      provider = injectedProvider.providers?.find(providerFilter);
+      provider = injectedProvider.providers?.find((v) =>
+        finalProviderFilter(v),
+      );
     } else {
-      provider = provider && providerFilter(provider) ? provider : undefined;
+      provider =
+        provider && finalProviderFilter(provider) ? provider : undefined;
     }
 
     if (!provider) {
