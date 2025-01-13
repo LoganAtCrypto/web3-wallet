@@ -1,5 +1,23 @@
 # @web3-wallet/nextjs
 
+## 2.0.1
+
+### Patch Changes
+
+- eip-6963 support multiple providers
+- Updated dependencies
+  - @react-web3-wallet/core@3.0.1
+  - @react-web3-wallet/metamask@3.0.1
+  - @react-web3-wallet/rabby@3.0.1
+  - @react-web3-wallet/react@3.0.1
+  - @react-web3-wallet/brave-wallet@3.0.1
+  - @react-web3-wallet/coinbase-wallet@3.0.1
+  - @react-web3-wallet/cryptocom-desktop-wallet@3.0.1
+  - @react-web3-wallet/defiwallet@3.0.1
+  - @react-web3-wallet/imtoken@3.0.1
+  - @react-web3-wallet/trust-wallet@3.0.1
+  - @react-web3-wallet/walletconnect@4.0.1
+
 ## 2.0.0
 
 ### Major Changes

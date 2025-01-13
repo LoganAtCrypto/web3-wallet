@@ -1,5 +1,12 @@
 # @web3-wallet/brave-wallet
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @react-web3-wallet/core@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
